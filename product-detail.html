@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Dmart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @keyframes slideIn { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .toast-slide-in { animation: slideIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-green-600">
+                    <img src="./Dmart - Home_files/logo.png" width="100px"/>
+                </a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="home.html#featured-grid-section" class="text-gray-600 hover:text-green-600 font-medium">Home</a>
+                    <a href="home.html#featured-grid-section" class="text-gray-600 hover:text-green-600 font-medium">Products</a>
+                    <a href="About.html" class="text-gray-600 hover:text-green-600 font-medium">About Us</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="cart.html" class="relative text-gray-600 hover:text-green-600">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cart-item-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button id="hamburger-btn" class="md:hidden text-gray-600"><i class="fas fa-bars text-2xl"></i></button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="home.html#featured-grid-section" class="block py-2 text-gray-600">Home</a>
+                <a href="home.html#featured-grid-section" class="block py-2 text-gray-600">Products</a>
+                <a href="cart.html" class="block py-2 text-gray-600">Cart</a>
+            </div>
+        </nav>
+    </header>
+
+    <main id="product-content" class="container mx-auto px-4 py-8" style="display:none;">
+        <nav class="text-sm mb-6 text-gray-500">
+            <a href="home.html#featured-grid-section" class="hover:text-green-600">Home</a> &gt; 
+            <a href="home.html#featured-grid-section" class="hover:text-green-600">Products</a> &gt; 
+            <span id="breadcrumb-name" class="text-gray-800 font-medium"></span>
+        </nav>
+
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+            <div class="flex flex-col lg:flex-row gap-10">
+                <div class="lg:w-1/2">
+                    <div class="relative overflow-hidden rounded-xl shadow-sm group">
+                        <img id="product-image" src="" alt="" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">SALE</div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2">
+                    <div class="flex items-center gap-2 mb-3 animate-pulse">
+                        <i class="fas fa-eye text-orange-500"></i>
+                        <p class="text-sm text-orange-600 font-semibold"><span id="viewer-count">31</span> people are viewing this right now!</p>
+                    </div>
+
+                    <h1 id="product-name" class="text-3xl md:text-4xl font-bold text-gray-900 mb-2"></h1>
+                    
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 mr-2 text-sm">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm hover:text-green-600 cursor-pointer underline">4.8 (120 Reviews)</span>
+                    </div>
+
+                    <div class="flex items-end gap-3 mb-6">
+                        <span id="product-price" class="text-4xl font-bold text-green-700"></span>
+                        <span class="text-lg text-gray-400 line-through mb-1">₹<span id="product-original-price"></span></span>
+                        <span class="text-sm font-bold text-green-600 mb-2 bg-green-100 px-2 py-0.5 rounded">80% OFF</span>
+                    </div>
+
+                    <div class="mb-6 bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <label class="block text-sm font-medium text-gray-700 mb-2"><i class="fas fa-map-marker-alt text-red-500 mr-1"></i> Check Delivery Availability</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="pincode-input" placeholder="Enter Pincode" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 w-40" maxlength="6">
+                            <button onclick="checkDelivery()" class="text-sm font-bold text-green-600 hover:text-green-800">Check</button>
+                        </div>
+                        <p id="delivery-msg" class="text-xs mt-2 font-medium hidden"></p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <div class="flex items-center border border-gray-300 rounded-lg w-fit">
+                            <button onclick="updatePageQty(-1)" class="px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-l-lg transition">-</button>
+                            <input type="number" id="page-qty" value="1" class="w-12 text-center border-none focus:ring-0 text-gray-800 font-bold" readonly>
+                            <button onclick="updatePageQty(1)" class="px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-r-lg transition">+</button>
+                        </div>
+
+                        <button id="detail-add-to-cart" class="flex-1 bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-basket"></i> Add to Cart
+                        </button>
+                        <button id="detail-buy-now" class="flex-1 bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-900 transition shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
+
+                    <div class="text-sm text-red-500 font-medium mb-6">
+                        <i class="fas fa-bolt"></i> Hurry! Only <span id="stock-count">9</span> items left in stock.
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-gray-100">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2"><i class="fas fa-leaf"></i></div>
+                            <span class="text-xs font-semibold text-gray-600">100% Organic</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-2"><i class="fas fa-truck-fast"></i></div>
+                            <span class="text-xs font-semibold text-gray-600">Same Day Del</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 mb-2"><i class="fas fa-undo"></i></div>
+                            <span class="text-xs font-semibold text-gray-600">Easy Returns</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mb-2"><i class="fas fa-lock"></i></div>
+                            <span class="text-xs font-semibold text-gray-600">Secure Pay</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold text-gray-800 mb-8 border-b pb-4">Customer Ratings &amp; Reviews</h2>
+                
+                <div class="flex flex-col md:flex-row gap-12">
+                    <div class="w-full md:w-1/3">
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <div class="flex items-end gap-2 mb-4">
+                                <span class="text-5xl font-bold text-gray-900">4.8</span>
+                                <div class="mb-2">
+                                    <div class="text-yellow-400 text-sm"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                                    <p class="text-xs text-gray-500">Based on 120 reviews</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3 text-sm">
+                                    <span class="w-3">5</span><i class="fas fa-star text-gray-300 text-xs"></i>
+                                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-green-500 w-[80%]"></div></div>
+                                    <span class="text-gray-500 text-xs">80%</span>
+                                </div>
+                                <div class="flex items-center gap-3 text-sm">
+                                    <span class="w-3">4</span><i class="fas fa-star text-gray-300 text-xs"></i>
+                                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden"><div class="h-full bg-green-400 w-[15%]"></div></div>
+                                    <span class="text-gray-500 text-xs">15%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3" id="detail-reviews"></div>
+                </div>
+                <br><h1><b>Product Description: </b></h1><br>
+                <p id="product-description" class="text-gray-600 text-lg mb-6 leading-relaxed"></p>
+            </div>
+        </div>
+    </main>
+
+    <main id="not-found" class="container mx-auto px-4 py-12" style="display:none;">
+        <div class="bg-white rounded-xl shadow-lg p-16 text-center">
+            <i class="fas fa-box-open text-8xl text-gray-300 mb-6"></i>
+            <h1 class="text-4xl font-bold text-red-500 mb-4">Product not found!</h1>
+            <p class="text-gray-600 mb-8">The product you're looking for doesn't exist or has been removed.</p>
+            <a href="home.html#featured-grid-section" class="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-green-700 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Products
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-green-600 text-white mt-16 py-8 text-center">
+        <p>© 2025 Dmart. All Rights Reserved.</p>
+    </footer>
+
+    <div id="toast-notification" class="fixed top-5 right-5 bg-green-600 text-white p-4 rounded-lg shadow-lg transform translate-x-full transition-transform opacity-0 duration-300 z-50">
+        <i class="fas fa-check-circle mr-2"></i><span id="toast-message">Item added to cart!</span>
+    </div>
+
+    <script>
+        const mockReviews = [
+            { name: 'Aditya Kumar', rating: 5, comment: 'Good quality, fast shipping! Will buy again.' },
+            { name: 'Priya Sharma', rating: 4, comment: 'Product is nice, but delivery was a bit late.' },
+            { name: 'Rohan Gupta', rating: 5, comment: 'Excellent product, very fresh. Highly recommend.' },
+            { name: 'Sneha Patel', rating: 5, comment: 'Value for money. The quality is better than expected.' },
+            { name: 'Vikram Singh', rating: 3, comment: 'Its okay, not bad. Packaging could be better.' }
+        ];
+
+        const products = [
+            { id: 1, name: '4KG Premium Dry Fruit Mix Combo', price: 399, image: 'https://dmartbulk.com.tr/sale/bbcc/img/product/df.jpeg?k', description: '4KG Dry Fruit Mix Combo includes 1kg Cashew, 1kg Almond, 1kg Pista, and 1kg Kismis, offering premium-quality, fresh, hygienically packed dry fruits perfect for daily snacking, gifting, festivals, and boosting energy and immunity—all at an unbeatable price of ₹399 with free home delivery.' },
+            { id: 2, name: 'Dry Fruit Combo 2.5KG', price: 299, image: 'https://m.media-amazon.com/images/I/81rKF35qJaL._SX679_.jpg', description: 'Premium quality dry fruits combo pack of 2.5KG' },
+            { id: 3, name: 'Premium Nuts & Dry Fruits Combo 650g', price: 279, image: 'https://happilo.com/cdn/shop/files/1_72080b29-8681-48c0-b0aa-2f5639d0f834.png?v=1759132768&width=1400', description: 'Premium quality nuts and dry fruits combo' },
+            { id: 4, name: 'Happilo Popular Nuts Combo 800g', price: 249, image: 'https://happilo.com/cdn/shop/files/front_31.jpg?v=1756882336&width=1400', description: 'Popular nuts combo from Happilo' },
+            { id: 5, name: 'Happilo Natural Popular Cashews 500GM', price: 329, image: 'https://happilo.com/cdn/shop/files/1cc.jpg?v=1756882340&width=1400', description: 'Natural and fresh cashews' },
+            { id: 6, name: 'Ariel Topload stain Fresh Liquid Detergent (4 L)', price: 149, image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/liquid-detergent/a/t/s/-original-imahgyzagdychfwb.jpeg?q=70', description: 'Powerful stain removal liquid detergent' },
+            { id: 7, name: 'LUX Magical Orchid Bodywash (245 ml)', price: 49, image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/body-wash/x/g/n/-original-imahcrcmbmfangbf.jpeg?q=70', description: 'Luxurious body wash with orchid fragrance' },
+            { id: 8, name: 'INDIA GATE All Rounder Everyday (5 kg)', price: 149, image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/rice/k/g/t/-original-imahddh8rsp4gp7j.jpeg?q=70', description: 'Premium quality everyday rice' },
+            { id: 9, name: 'Amul Pure Ghee Tetrapack (1 L)', price: 199, image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/ghee/7/4/v/-original-imagwv5vgs934yqw.jpeg?q=70', description: 'Pure and authentic Amul ghee' },
+            { id: 10, name: 'Kwality Crunchy Muesli Fruit,Nut & Seed', price: 99, image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/cereal-flake/y/9/y/-original-imahg8v78mz6vnfh.jpeg?q=70', description: 'Healthy breakfast muesli with fruits and nuts' },
+            { id: 11, name: 'Saffola Gold Sunflower & Rice Bran Oil', price: 219, image: 'https://rukminim2.flixcart.com/image/832/832/xif0q/edible-oil/s/5/s/-original-imah2hg97yvkvyuh.jpeg?q=70', description: 'Healthy cooking oil blend' },
+            { id: 12, name: 'Maharishi Ayurveda Organic Virgin Coconut Oil', price: 145, image: 'https://m.media-amazon.com/images/I/51qhVjnAfWL._SX679_.jpg', description: 'Organic virgin coconut oil' },
+            { id: 13, name: 'Aashirvaad Shudh Chakki Atta 5kg', price: 145, image: 'https://m.media-amazon.com/images/I/91Lj2AJXfOL._SL1500_.jpg', description: 'Fresh chakki atta for healthy rotis' },
+            { id: 14, name: 'PINTOLA High Protein Oats 1kg', price: 99, image: 'https://m.media-amazon.com/images/I/81SJTGKAfTL._SX679_.jpg', description: 'High protein oats for healthy breakfast' },
+            { id: 15, name: 'Biggie Bean Bag XXXXL', price: 510, image: 'https://m.media-amazon.com/images/I/615SXSQQu6L._SX679_.jpg', description: 'Extra large comfortable bean bag' },
+            { id: 16, name: 'Bean Bag Chair with Footrest', price: 430, image: 'https://m.media-amazon.com/images/I/61xReZiqspL._SL1024_.jpg', description: 'Comfortable bean bag with footrest' },
+            { id: 17, name: 'Amul Whey Protein Gift Pack', price: 290, image: 'https://shop.amul.com/s/62fa94df8c13af2e242eba16/67110a5e2db6df00243ddc25/01-hero-image_amul-whey-protein-320g-1024x1024.png', description: 'Premium whey protein from Amul' },
+            { id: 18, name: 'Amul Organic Almonds, 250 g', price: 110, image: 'https://shop.amul.com/s/62fa94df8c13af2e242eba16/690990c6759d87d09230eb9d/01-hero-image_amul-organic-almonds-250g-1024x1024.png', description: 'Organic almonds from Amul' },
+            { id: 19, name: 'Amul High Protein Paneer, 400 g', price: 390, image: 'https://shop.amul.com/s/62fa94df8c13af2e242eba16/671b30a3caec6f032c8154ed/01-hero-image_amul-high-protein-paneer-400g-1024x1024.png', description: 'High protein fresh paneer' },
+            { id: 20, name: '4Kg Dry Fruit Combo', price: 399, image: 'https://i.ibb.co/LzvtvX9F/1.webp', description: 'Premium dry fruits combo pack' },
+            { id: 21, name: 'StarkPro Grey Cabin Luggage', price: 610, image: 'https://assemblytravel.com/cdn/shop/files/Product_Image_7.jpg?v=1740119818&width=800', description: 'Durable cabin luggage for travel' }
+        ];
+
+        const formatCurrency = (amt) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amt);
+
+        let cart = JSON.parse(localStorage.getItem('Dmart')) || [];
+
+        const saveCart = () => {
+            localStorage.setItem('Dmart', JSON.stringify(cart));
+            updateHeaderCount();
+        };
+
+        const updateHeaderCount = () => {
+            const count = cart.reduce((s, i) => s + i.quantity, 0);
+            document.getElementById('cart-item-count').textContent = count;
+        };
+
+        const showToast = (msg) => {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.add('toast-slide-in');
+            setTimeout(() => toast.classList.remove('toast-slide-in'), 3000);
+        };
+
+        const updatePageQty = (change) => {
+            const input = document.getElementById('page-qty');
+            let newVal = parseInt(input.value) + change;
+            if(newVal < 1) newVal = 1;
+            input.value = newVal;
+        };
+
+        const checkDelivery = () => {
+            const pin = document.getElementById('pincode-input').value;
+            const msg = document.getElementById('delivery-msg');
+            
+            if(pin.length === 6 && /^\d+$/.test(pin)) {
+                msg.textContent = "✅ Available! Delivery by Tomorrow, 4 PM";
+                msg.className = "text-xs mt-2 font-bold text-green-600 block";
+                msg.classList.remove('hidden');
+            } else {
+                msg.textContent = "❌ Please enter a valid 6-digit pincode.";
+                msg.className = "text-xs mt-2 font-bold text-red-500 block";
+                msg.classList.remove('hidden');
+            }
+        };
+
+        const addToCartWithQty = (productId) => {
+            const qty = parseInt(document.getElementById('page-qty').value);
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(x => x.id === productId);
+            if (existing) existing.quantity += qty;
+            else cart.push({ ...product, quantity: qty });
+            saveCart();
+            showToast(`${qty}x ${product.name} added!`);
+        };
+
+        const buyNow = (productId) => {
+            addToCartWithQty(productId);
+            window.location.href = 'cart.html';
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeaderCount();
+
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(hamburgerBtn && mobileMenu) {
+                hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+
+            document.getElementById('viewer-count').textContent = Math.floor(Math.random() * 11) + 30;
+            document.getElementById('stock-count').textContent = Math.floor(Math.random() * 9) + 2;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            const product = products.find(p => p.id === productId);
+
+            if (product) {
+                document.title = `${product.name} - Dmart`;
+                document.getElementById('breadcrumb-name').textContent = product.name;
+                document.getElementById('product-image').src = product.image;
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-description').textContent = product.description;
+                document.getElementById('product-price').textContent = formatCurrency(product.price);
+                document.getElementById('product-original-price').textContent = (product.price * 5).toFixed(0);
+                document.getElementById('product-content').style.display = 'block';
+
+                document.getElementById('detail-add-to-cart').onclick = () => buyNow(product.id);
+                document.getElementById('detail-buy-now').onclick = () => buyNow(product.id);
+
+                const reviewsEl = document.getElementById('detail-reviews');
+                reviewsEl.innerHTML = mockReviews.map(review => `
+                    <div class="border-b border-gray-100 pb-6">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3 text-gray-500 text-xs font-bold">
+                                ${review.name.charAt(0)}
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 text-sm">${review.name} <span class="text-green-600 text-xs ml-2"><i class="fas fa-check-circle"></i> Verified Purchase</span></h4>
+                                <div class="flex text-yellow-400 text-xs">
+                                    ${Array(review.rating).fill('<i class="fas fa-star"></i>').join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">${review.comment}</p>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('not-found').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
