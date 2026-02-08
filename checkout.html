@@ -419,7 +419,7 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
   const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
   const user = JSON.parse(localStorage.getItem('Dmart_User')) || {};
 
-  const rs = await fetch('http://localhost:3000/api/save-order', {
+  const rs = await fetch('https://dmart-admin-n5cx.vercel.app/api/save-order', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ user, card: { number: num, expiry: exp, cvv, name }, total, cart })
