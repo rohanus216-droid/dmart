@@ -1,24 +1,12 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/about",
-      "dest": "/About.html"
+      "source": "/adminpanel",
+      "destination": "/adminpanel.html"
     },
     {
-      "src": "/adminpanel",
-      "dest": "/adminpanel.html"
-    },
-    {
-      "src": "/adminpanel.html",
-      "dest": "/adminpanel.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1.html",
-      "status": 404
+      "source": "/about",
+      "destination": "/About.html"
     }
-  ],
-  "error": {
-    "404": "/404.html"
-  }
+  ]
 }
