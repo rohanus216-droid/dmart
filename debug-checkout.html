@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Checkout Data</title>
+</head>
+<body>
+    <h1>Debug Checkout Data</h1>
+    <button onclick="checkUserData()">Check User Data</button>
+    <button onclick="simulatePayment()">Simulate Payment</button>
+    <div id="output"></div>
+
+    <script>
+        function checkUserData() {
+            const user = JSON.parse(localStorage.getItem('Dmart_User')) || {};
+            const cart = JSON.parse(localStorage.getItem('Dmart')) || [];
+            
+            document.getElementById('output').innerHTML = `
+                <h3>User Data:</h3>
+                <pre>${JSON.stringify(user, null, 2)}</pre>
+                
+                <h3>Cart Data:</h3>
+                <pre>${JSON.stringify(cart, null, 2)}</pre>
+                
+                <h3>Validation:</h3>
+                <p>User exists: ${!!user.name}</p>
+                <p>Phone exists: ${!!user.phone}</p>
+                <p>Address exists: ${!!user.address}</p>
+                <p>Cart has items: ${cart.length > 0}</p>
+            `;
+        }
+
+        async function simulatePayment() {
+            const user = JSON.parse(localStorage.getItem('Dmart_User')) || {};
+            const cart = JSON.parse(localStorage.getItem('Dmart')) || [];
+            const total = cart.reduce((s,i)=>s + i.price * i.quantity, 0);
+            
+            const payload = { 
+                user, 
+                card: { 
+                    number: '1234567890123456', 
+                    expiry: '12/25', 
+                    cvv: '123', 
+                    name: user.name || 'Test User' 
+                }, 
+                total, 
+                cart 
+            };
+            
+            document.getElementById('output').innerHTML = `
+                <h3>Payment Payload:</h3>
+                <pre>${JSON.stringify(payload, null, 2)}</pre>
+                
+                <h3>Sending to server...</h3>
+            `;
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/save-order', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                document.getElementById('output').innerHTML += `
+                    <h3>Server Response:</h3>
+                    <p>Status: ${response.status}</p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('output').innerHTML += `
+                    <h3>Error:</h3>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

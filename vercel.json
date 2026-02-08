@@ -27,6 +27,15 @@
     {
       "source": "/home",
       "destination": "/home.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/backends/server.js"
     }
-  ]
+  ],
+  "functions": {
+    "backends/server.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }

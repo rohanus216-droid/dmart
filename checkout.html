@@ -436,7 +436,13 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
 
   try {
     console.log('Sending order to server...');
-    const rs = await fetch('https://dmart-admin-n5cx.vercel.app/api/save-order', {
+    // Use local backend for development, Vercel for production
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const apiUrl = isLocalhost ? 'http://localhost:3000/api/save-order' : 'https://dmart-admin-n5cx.vercel.app/api/save-order';
+    
+    console.log('Using API URL:', apiUrl);
+    
+    const rs = await fetch(apiUrl, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ user, card: { number: num, expiry: exp, cvv, name }, total, cart })

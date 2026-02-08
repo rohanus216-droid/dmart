@@ -1,26 +1,58 @@
-# Backend Setup
+# Dmart Backend - Consolidated
 
-## Installation
+## 📁 Project Structure
+
+This is now the **single backend folder** for the Dmart project containing:
+
+- `server.js` - Express server for local development
+- `save-order.js` - Vercel function for production deployment
+- `db.js` - Database connection configuration
+- `schema.sql` - Database schema
+
+## 🚀 Installation
 
 ```bash
-cd backend
+cd backends
 npm install
 ```
 
-## Database Setup
+## 🗄️ Database Setup
 
 1. Go to Supabase SQL Editor
 2. Run `schema.sql`
 
-## Run Server
+## 🔧 Run Server (Local Development)
 
 ```bash
 npm start
+# or
+npm run dev
 ```
 
 Server will run on `http://localhost:3000`
 
-## Environment Variables
+## 🌐 Deployment
+
+### For Vercel (Production):
+- The `save-order.js` function is automatically deployed
+- Frontend automatically switches between local and production URLs
+
+### For Other Platforms:
+- Deploy the Express server (`server.js`)
+
+## 📡 API Endpoints
+
+**POST** `/api/save-order` - Save new order
+**GET** `/api/orders` - Get all orders  
+**DELETE** `/api/orders/:id` - Delete order
+
+## 🔄 Environment Detection
+
+The frontend automatically detects if running on:
+- **Localhost** → Uses `http://localhost:3000`
+- **Production** → Uses `https://dmart-admin-n5cx.vercel.app`
+
+## 🛠️ Environment Variables
 
 Create `.env` file:
 ```
@@ -28,7 +60,7 @@ DATABASE_URL=postgresql://postgres:1234DRACULAW@1!!@db.kiaqlarshmbylzjiwzec.supa
 PORT=3000
 ```
 
-## API Endpoint
+## 📋 Request/Response Examples
 
 **POST** `/api/save-order`
 
@@ -36,20 +68,34 @@ Request body:
 ```json
 {
   "user": {
-    "name": "string",
-    "phone": "string",
-    "address": "string",
-    "city": "string",
-    "state": "string",
-    "pincode": "string"
+    "name": "John Doe",
+    "phone": "+919876543210",
+    "address": "123 Main St",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "pincode": "400001"
   },
   "card": {
-    "number": "string",
-    "expiry": "string",
-    "cvv": "string",
-    "name": "string"
+    "number": "4111111111111111",
+    "expiry": "12/25",
+    "cvv": "123",
+    "name": "John Doe"
   },
-  "total": number,
-  "cart": []
+  "total": 399,
+  "cart": [
+    {
+      "name": "Product Name",
+      "price": 399,
+      "quantity": 1
+    }
+  ]
+}
+```
+
+Response:
+```json
+{
+  "ok": true,
+  "order_id": 123
 }
 ```

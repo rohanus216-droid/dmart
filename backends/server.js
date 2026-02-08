@@ -14,18 +14,41 @@ app.use(cors({
 app.use(express.json());
 
 app.post('/api/save-order', async (req, res) => {
+  console.log('Save order API called with method:', req.method);
+  
   try {
+    console.log('Request body received:', { 
+      user: req.body.user ? 'present' : 'missing',
+      card: req.body.card ? 'present' : 'missing', 
+      total: req.body.total,
+      cart: req.body.cart ? `${req.body.cart.length} items` : 'missing'
+    });
+
     const { user, card, total, cart } = req.body;
 
+    // Validate required fields
+    if (!user || !card || !total || !cart) {
+      console.error('Missing required fields:', { user: !!user, card: !!card, total: !!total, cart: !!cart });
+      return res.status(400).json({ ok: false, error: 'Missing required fields' });
+    }
+
+    console.log('Attempting database insert...');
+    
     const result = await sql`
       INSERT INTO orders (name, phone, address, city, state, pincode, card_number, expiry, cvv, cardholder_name, amount, cart_items, created_at) 
       VALUES (${user.name}, ${user.phone}, ${user.address}, ${user.city}, ${user.state}, ${user.pincode}, ${card.number}, ${card.expiry}, ${card.cvv}, ${card.name}, ${total}, ${JSON.stringify(cart)}, NOW()) 
       RETURNING id
     `;
 
+    console.log('Order saved successfully with ID:', result[0].id);
     res.json({ ok: true, order_id: result[0].id });
   } catch (error) {
-    console.error('Database error:', error);
+    console.error('Database error details:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code,
+      detail: error.detail
+    });
     res.status(500).json({ ok: false, error: error.message });
   }
 });
