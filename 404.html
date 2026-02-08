@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Dmart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .container { text-align: center; padding: 20px; position: relative; z-index: 10; }
+        .error-code { font-size: 180px; font-weight: 800; color: rgba(255,255,255,0.2); line-height: 1; margin-bottom: -30px; text-shadow: 0 0 100px rgba(255,255,255,0.1); }
+        .cart-icon { font-size: 120px; color: #fff; margin: 20px 0; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        h1 { color: #fff; font-size: 42px; font-weight: 700; margin-bottom: 15px; }
+        p { color: rgba(255,255,255,0.9); font-size: 18px; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 14px 32px; border-radius: 50px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s; font-size: 16px; }
+        .btn-primary { background: #fff; color: #667eea; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); }
+        .btn-secondary { background: rgba(255,255,255,0.2); color: #fff; border: 2px solid rgba(255,255,255,0.3); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.3); transform: translateY(-3px); }
+        .floating-shapes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; z-index: 1; }
+        .shape { position: absolute; opacity: 0.1; }
+        .shape:nth-child(1) { top: 10%; left: 10%; animation: rotate 20s linear infinite; }
+        .shape:nth-child(2) { top: 70%; right: 15%; animation: rotate 15s linear infinite reverse; }
+        .shape:nth-child(3) { bottom: 10%; left: 50%; animation: rotate 25s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @media (max-width: 768px) {
+            .error-code { font-size: 120px; }
+            .cart-icon { font-size: 80px; }
+            h1 { font-size: 32px; }
+            p { font-size: 16px; }
+            .btn { padding: 12px 24px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <i class="fas fa-shopping-basket shape" style="font-size: 100px;"></i>
+        <i class="fas fa-apple-alt shape" style="font-size: 80px;"></i>
+        <i class="fas fa-carrot shape" style="font-size: 90px;"></i>
+    </div>
+
+    <div class="container">
+        <div class="error-code">404</div>
+        <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+        </div>
+        <h1>Oops! Page Not Found</h1>
+        <p>The page you're looking for seems to have wandered off. Let's get you back to shopping!</p>
+        <div class="btn-group">
+            <a href="home.html" class="btn btn-primary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+            <a href="home.html#featured-grid-section" class="btn btn-secondary">
+                <i class="fas fa-shopping-bag"></i> Shop Now
+            </a>
+        </div>
+    </div>
+</body>
+</html>

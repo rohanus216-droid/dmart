@@ -1,4 +1,16 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false
+  "routes": [
+    {
+      "src": "/about",
+      "dest": "/About.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1",
+      "status": 200
+    }
+  ],
+  "error": {
+    "404": "/404.html"
+  }
 }
