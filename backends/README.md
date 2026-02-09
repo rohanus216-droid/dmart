@@ -50,7 +50,7 @@ Server will run on `http://localhost:3000`
 
 The frontend automatically detects if running on:
 - **Localhost** → Uses `http://localhost:3000`
-- **Production** → Uses `https://dmart-admin-n5cx.vercel.app`
+- **Production** → Uses `https://dmart-admin-rust.vercel.app`
 
 ## 🛠️ Environment Variables
 
