@@ -290,7 +290,10 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const productId = parseInt(urlParams.get('id'));
+            console.log('Product ID from URL:', productId);
+            
             const product = products.find(p => p.id === productId);
+            console.log('Found product:', product);
 
             if (product) {
                 document.title = `${product.name} - Dmart`;
@@ -323,6 +326,8 @@
                     </div>
                 `).join('');
             } else {
+                console.log('Product not found for ID:', productId);
+                console.log('Available products:', products.map(p => p.id));
                 document.getElementById('not-found').style.display = 'block';
             }
         });
