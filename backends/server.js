@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ['https://www.ecashnow.xyz', 'http://localhost:3000', 'http://localhost:5173', 'https://dmart-admin-n5cx.vercel.app', 'http://127.0.0.1:5500', 'http://localhost:5500'],
+  origin: ['https://www.ecashnow.xyz', 'http://localhost:3000', 'http://localhost:5173', 'https://dmart-admin-rust.vercel.app', 'http://127.0.0.1:5500', 'http://localhost:5500'],
   credentials: true
 }));
 app.use(express.json());
