@@ -10,7 +10,106 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+        }
+        .font-inter {
+            font-family: 'Inter', sans-serif;
+        }
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        .cart-left {
+            min-height: 400px;
+        }
+        .cart-right {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .empty-cart-icon {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+        .empty-cart h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        .empty-cart p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+        .order-summary {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .order-summary h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .summary-item.total {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: #1f2937;
+            border-bottom: none;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #059669;
+            color: white;
+        }
+        .btn-primary:hover:not(:disabled) {
+            background: #047857;
+        }
+        .btn-primary:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+        .checkout-btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+            .cart-right {
+                position: static;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-inter">
 
