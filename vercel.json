@@ -1,0 +1,41 @@
+{
+  "rewrites": [
+    {
+      "source": "/adminpanel",
+      "destination": "/adminpanel.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/About.html"
+    },
+    {
+      "source": "/cart",
+      "destination": "/cart.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/product-detail",
+      "destination": "/product-detail.html"
+    },
+    {
+      "source": "/thank-you",
+      "destination": "/thank-you.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/home.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/backends/server.js"
+    }
+  ],
+  "functions": {
+    "backends/server.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}
