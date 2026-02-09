@@ -3,426 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com https://i.ibb.co https://m.media-amazon.com https://rukminim2.flixcart.com https://happilo.com https://shop.amul.com https://assemblytravel.com; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="robots" content="index, follow">
     <title>Dmart - Your Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        body { 
-            font-family: 'Inter', sans-serif;
-        }
-        .font-inter {
-            font-family: 'Inter', sans-serif;
-        }
-        .cart-container {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
-        .cart-left {
-            min-height: 400px;
-        }
-        .cart-right {
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-        .empty-cart {
-            text-align: center;
-            padding: 3rem;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .empty-cart-icon {
-            font-size: 4rem;
-            color: #d1d5db;
-            margin-bottom: 1rem;
-        }
-        .empty-cart h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-        }
-        .empty-cart p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-        }
-        .order-summary {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .order-summary h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #1f2937;
-        }
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        .summary-item.total {
-            font-weight: 600;
-            font-size: 1.125rem;
-            color: #1f2937;
-            border-bottom: none;
-        }
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: #059669;
-            color: white;
-        }
-        .btn-primary:hover:not(:disabled) {
-            background: #047857;
-        }
-        .btn-primary:disabled {
-            background: #d1d5db;
-            cursor: not-allowed;
-        }
-        .checkout-btn {
-            width: 100%;
-            margin-top: 1rem;
-        }
-        @media (max-width: 768px) {
-            .cart-container {
-                grid-template-columns: 1fr;
-            }
-            .cart-right {
-                position: static;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <link type="text/css" rel="stylesheet" id="dark-mode-custom-link">
+    <link type="text/css" rel="stylesheet" id="dark-mode-general-link">
+    <style lang="en" type="text/css" id="dark-mode-custom-style"></style>
+    <style lang="en" type="text/css" id="dark-mode-native-style"></style>
+    <style lang="en" type="text/css" id="dark-mode-native-sheet"></style>
 </head>
-<body class="bg-gray-50 font-inter">
+<body class="bg-gray-50 font-inter" cz-shortcut-listen="true">
 
     <!-- Header -->
     <header class="bg-white shadow-md sticky top-0 z-40">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-green-600">
-                    <img src="./Dmart - Home_files/logo.png" width="100px"/>
+                    <i class="fas "></i><span>  <img src="./Dmart - Your Cart_files/logo.png" width="100px"> </span>
                 </a>
-                
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="home.html" class="text-green-600 font-medium">Home</a>
-                    <a href="About.html" class="text-gray-600 hover:text-green-600 font-medium">About Us</a>
-                    <a href="contact.html" class="text-gray-600 hover:text-green-600 font-medium">Contact</a>
+                    <a href="home.html" class="text-gray-600 hover:text-green-600 font-medium">Home</a>
+                    <a href="home.html#featured-grid-section" class="text-gray-600 hover:text-green-600 font-medium">Products</a>
+                    <a href="cart.html" class="text-green-600 font-medium">Cart</a>
+                    <a href="about.html" class="text-gray-600 hover:text-green-600 font-medium">About Us</a>
                 </div>
-                
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-600 hover:text-green-600">
-                        <i class="fas fa-search"></i>
-                    </button>
-                    <button class="text-gray-600 hover:text-green-600">
-                        <i class="fas fa-user"></i>
-                    </button>
-                    <a href="cart.html" class="relative text-gray-600 hover:text-green-600">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span id="cart-item-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    <a href="cart.html" class="relative text-green-600">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cart-item-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                     </a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Cart Section -->
-    <section class="py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-8">Shopping Cart</h1>
-            
-            <!-- Cart Container -->
-            <div class="cart-container">
-                <div class="cart-left">
-                    <div class="empty-cart">
-                        <div class="empty-cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <h2>Your cart is empty</h2>
-                        <p>Looks like you haven't added anything to your cart yet.</p>
-                        <a href="home.html" class="btn btn-primary">Start Shopping</a>
-                    </div>
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Your Shopping Cart</h1>
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Cart Items List -->
+            <div class="w-full lg:w-2/3">
+                <div id="cart-items-container" class="space-y-4"></div>
+                <!-- Empty Cart Message -->
+                <div id="cart-empty-message" class="bg-white p-12 rounded-lg shadow-md text-center">
+                    <i class="fas fa-shopping-basket text-6xl text-gray-300 mb-4"></i>
+                    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Your cart is empty</h2>
+                    <p class="text-gray-500 mb-6">Looks like you haven't added anything to your cart yet.</p>
+                    <a href="home.html#featured-grid-section" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-green-700 transition duration-300 inline-block">Start Shopping</a>
                 </div>
-                
-                <div class="cart-right">
-                    <div class="order-summary">
-                        <h3>Order Summary</h3>
-                        <div class="summary-item">
+            </div>
+
+            <!-- Order Summary -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-white p-6 rounded-lg shadow-md sticky top-24">
+                    <h2 class="text-2xl font-semibold border-b pb-4 mb-4">Order Summary</h2>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-gray-600">
                             <span>Subtotal</span>
-                            <span>₹0.00</span>
+                            <span id="cart-subtotal" class="font-medium">&#8377;0.00</span>
                         </div>
-                        <div class="summary-item">
+                        <div class="flex justify-between text-gray-600">
                             <span>Shipping</span>
-                            <span>₹0.00</span>
+                            <span id="cart-shipping" class="font-medium text-green-600">Free</span>
                         </div>
-                        <div class="summary-item total">
+                        <div class="flex justify-between text-xl font-bold text-gray-800 border-t pt-4 mt-4">
                             <span>Total</span>
-                            <span>₹0.00</span>
+                            <span id="cart-total">&#8377;0.00</span>
                         </div>
-                        <button class="btn btn-primary checkout-btn" disabled>
-                            Proceed to Checkout
-                        </button>
                     </div>
+                    <button id="checkout-btn" onclick="window.location.href='checkout.html'" class="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-lg text-lg hover:bg-green-700 transition duration-300 mt-6 shadow-md disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Proceed to Checkout
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    
-    <style>
-        .cart-container {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 2rem;
-        }
-        
-        .empty-cart {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .empty-cart-icon {
-            font-size: 4rem;
-            color: #d1d5db;
-            margin-bottom: 1rem;
-        }
-        
-        .empty-cart h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
-        }
-        
-        .empty-cart p {
-            color: #6b7280;
-            margin-bottom: 1.5rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background: #16a34a;
-            color: white;
-        }
-        
-        .btn-primary:hover:not(:disabled) {
-            background: #15803d;
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .order-summary {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            height: fit-content;
-        }
-        
-        .order-summary h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #374151;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        
-        .summary-item:last-child {
-            border-bottom: none;
-        }
-        
-        .summary-item.total {
-            font-weight: 600;
-            font-size: 1.125rem;
-            color: #374151;
-            padding-top: 1rem;
-            border-top: 2px solid #f3f4f6;
-        }
-        
-        .checkout-btn {
-            width: 100%;
-            margin-top: 1rem;
-        }
-        
-        .footer {
-            background: #1f2937;
-            color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 4rem;
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-col h3,
-        .footer-col h4 {
-            margin-bottom: 1rem;
-            color: #10b981;
-        }
-        
-        .footer-col ul {
-            list-style: none;
-        }
-        
-        .footer-col ul li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .footer-col a {
-            color: #9ca3af;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-col a:hover {
-            color: #10b981;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: #374151;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background: #10b981;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #374151;
-            color: #9ca3af;
-        }
-        
-        @media (max-width: 768px) {
-            .cart-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-        }
-    </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script>
+        // --- UTILS ---
+        const formatCurrency = (amt) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amt);
+
+        // --- STATE ---
         let cart = JSON.parse(localStorage.getItem('Dmart')) || [];
-        
-        const updateCart = () => {
-            const cartLeft = document.querySelector('.cart-left');
-            const count = cart.reduce((s, i) => s + i.quantity, 0);
+
+        // --- LOGIC ---
+        const updateHeaderCount = () => {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-item-count').textContent = count;
+        };
+
+        const saveCart = () => {
+            localStorage.setItem('Dmart', JSON.stringify(cart));
+            renderCart();
+            updateHeaderCount();
+        };
+
+        const updateQuantity = (id, change) => {
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.quantity += change;
+                if(item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                saveCart();
+            }
+        };
+
+        const removeItem = (id) => {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+        };
+
+        const renderCart = () => {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('cart-empty-message');
+            const checkoutBtn = document.getElementById('checkout-btn');
             
             if (cart.length === 0) {
-                cartLeft.innerHTML = `
-                    <div class="empty-cart">
-                        <div class="empty-cart-icon"><i class="fas fa-shopping-cart"></i></div>
-                        <h2>Your cart is empty</h2>
-                        <p>Looks like you haven't added anything to your cart yet.</p>
-                        <a href="home.html" class="btn btn-primary">Start Shopping</a>
-                    </div>`;
-            } else {
-                cartLeft.innerHTML = cart.map(item => `
-                    <div class="bg-white p-4 rounded-lg shadow-sm mb-4 flex gap-4">
-                        <img src="${item.image}" class="w-24 h-24 object-contain">
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-gray-800">${item.name}</h3>
-                            <p class="text-green-600 font-bold">₹${item.price}</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="updateQty(${item.id}, -1)" class="w-8 h-8 bg-gray-200 rounded">-</button>
-                            <span class="w-8 text-center">${item.quantity}</span>
-                            <button onclick="updateQty(${item.id}, 1)" class="w-8 h-8 bg-gray-200 rounded">+</button>
-                        </div>
-                        <button onclick="removeItem(${item.id})" class="text-red-500"><i class="fas fa-trash"></i></button>
-                    </div>`).join('');
+                container.innerHTML = '';
+                emptyMsg.classList.remove('hidden');
+                checkoutBtn.disabled = true;
+                
+                // Reset totals
+                document.getElementById('cart-subtotal').textContent = formatCurrency(0);
+                document.getElementById('cart-total').textContent = formatCurrency(0);
+                return;
             }
-            
-            const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
-            document.querySelector('.order-summary').innerHTML = `
-                <h3>Order Summary</h3>
-                <div class="summary-item"><span>Subtotal</span><span>₹${subtotal.toFixed(2)}</span></div>
-                <div class="summary-item"><span>Shipping</span><span>₹0.00</span></div>
-                <div class="summary-item total"><span>Total</span><span>₹${subtotal.toFixed(2)}</span></div>
-                <button class="btn btn-primary checkout-btn" ${cart.length === 0 ? 'disabled' : ''} onclick="window.location.href='checkout.html'">Proceed to Checkout</button>`;
+
+            emptyMsg.classList.add('hidden');
+            checkoutBtn.disabled = false;
+
+            let subtotal = 0;
+            container.innerHTML = cart.map(item => {
+                subtotal += item.price * item.quantity;
+                return `
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center gap-4">
+                        <img src="${item.image}" class="w-24 h-24 object-cover rounded-md">
+                        <div class="flex-grow text-center sm:text-left">
+                            <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
+                            <p class="text-gray-500">${formatCurrency(item.price)}</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 font-bold">-</button>
+                            <span class="w-8 text-center font-semibold">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 font-bold">+</button>
+                        </div>
+                        <div class="font-bold text-lg w-24 text-right">
+                            ${formatCurrency(item.price * item.quantity)}
+                        </div>
+                        <button onclick="removeItem(${item.id})" class="text-red-500 hover:text-red-700 p-2">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cart-subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('cart-total').textContent = formatCurrency(subtotal); // Free shipping logic applied
         };
-        
-        const updateQty = (id, change) => {
-            const item = cart.find(x => x.id === id);
-            item.quantity += change;
-            if (item.quantity <= 0) cart = cart.filter(x => x.id !== id);
-            localStorage.setItem('Dmart', JSON.stringify(cart));
-            updateCart();
-        };
-        
-        const removeItem = (id) => {
-            cart = cart.filter(x => x.id !== id);
-            localStorage.setItem('Dmart', JSON.stringify(cart));
-            updateCart();
-        };
-        
-        updateCart();
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            updateHeaderCount();
+            renderCart();
+        });
     </script>
-</body>
+
+    </body>
 </html>
+<style>html{box-sizing:border-box;text-size-adjust:100%;word-break:normal;tab-size:4}*,:before,:after{background-repeat:no-repeat;box-sizing:border-box}:before,:after{text-decoration:inherit;vertical-align:inherit}*{padding:0;margin:0}hr{overflow:visible;height:0;color:inherit;border:0;border-top:1px solid}details,main{display:block}summary{display:list-item}small{font-size:80%}[hidden]{display:none!important}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}a{background-color:transparent}a:active,a:hover{outline-width:0}code,kbd,pre,samp{font-family:monospace}pre{font-size:1em}b,strong{font-weight:bolder}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{border-color:inherit;text-indent:0}iframe{border-style:none}input{border-radius:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{appearance:none}textarea{overflow:auto;resize:vertical}button,input,optgroup,select,textarea{font:inherit;color:inherit}optgroup{font-weight:700}button{overflow:visible}button,select{text-transform:none}button,[type=button],[type=reset],[type=submit],[role=button]{cursor:pointer}button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{border-style:none;padding:0}button,html [type=button],[type=reset],[type=submit],[role=button]{appearance:auto}button,input,select,textarea{background-color:transparent;border-style:none}button:-moz-focusring,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{outline:1px dotted ButtonText}select{appearance:none}a:focus,button:focus,input:focus,select:focus,textarea:focus{outline-width:0}select::-ms-expand{display:none}select::-ms-value{color:currentcolor}legend{border:0;color:inherit;display:table;white-space:normal;max-width:100%}::-webkit-file-upload-button{appearance:auto;color:inherit;font:inherit}[disabled]{cursor:default}img{border-style:none}progress{vertical-align:baseline}[aria-busy=true]{cursor:progress}[aria-controls]{cursor:pointer}[aria-disabled=true]{cursor:default}ul,ol{list-style-type:none}figure{margin:0}@keyframes slide-in{0%{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.gradient-blue{background:radial-gradient(106.41% 128.47% at 50.15% 128.47%,#23abff,#3066ff)}.gradient-green{background:radial-gradient(92.26% 118.88% at 50.15% .13%,#00c3c3,#00aab3)}.gradient-purple{background:radial-gradient(165.12% 115.56% at 50.15% .13%,#a15aff,#00a0eb)}.bg-blue{background-color:#f2f5ff}.bg-purple{background-color:#f7f0ff}.bg-green{background-color:#ebffed}.lock-screen{font-family:FigtreeVF,sans-serif;letter-spacing:normal;position:fixed;z-index:2147483638;right:24px;bottom:24px;width:327px;border-radius:24px;overflow:hidden;box-shadow:0 24px 32px #00000014;animation:slide-in .3s ease-in-out forwards}.lock-screen__content{position:relative;padding:24px 24px 64px}.lock-screen__close{position:absolute;top:16px;right:16px;width:24px;height:24px;display:flex;align-items:center;justify-content:center;opacity:.5}.lock-screen__label{height:26px;width:fit-content;border-radius:50px;background-color:#fff3;padding-inline:16px;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:12px;line-height:18px;margin:-8px auto 16px}.lock-screen__title{color:#fff;text-align:center;font-size:20px;line-height:28px;font-weight:600;margin-bottom:8px}.lock-screen__description{color:#f5f6f7;text-align:center;font-size:14px;line-height:20px}.lock-screen__description b{font-weight:600}.lock-screen__card{position:relative;z-index:1;margin-top:-44px;background-color:#fff;border-radius:24px;padding:32px 20px 20px}.lock-screen__inner{margin-bottom:24px}.lock-screen__submit{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;height:40px;width:100%;border-radius:12px;padding-inline:16px;background-color:#f70;color:#fff;margin-bottom:16px}.lock-screen__skip{display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;color:#82829c;margin-inline:auto}.price-card{border:1px solid #f2f2fc;background:linear-gradient(254.14deg,#fafbff .04%,#f5f8ff 100.04%);border-radius:24px;padding:24px 28px}.price-card__label{color:#4a5764;text-align:center;font-size:14px;line-height:20px;text-transform:uppercase;margin-bottom:16px}.price-card__price{display:flex;justify-content:center;align-items:flex-start;column-gap:2px;margin-bottom:12px}.price-card__currency{color:#515478;font-size:18px;line-height:28px}.price-card__number{color:#14142a;text-align:center;font-size:64px;line-height:54px}.price-card__wrap{display:flex;flex-direction:column}.price-card__decimal{color:#515478;font-size:18px;line-height:28px;font-weight:600}.price-card__period{color:#515478;font-size:14px;line-height:20px;margin-top:-6px}.price-card__discount{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:12px}.price-card__discount-divider{position:absolute;z-index:0;top:50%;left:0;width:100%;height:1px;background-color:#dbe2f9;transform:translateY(-50%)}.price-card__discount-icon{position:absolute;z-index:1;top:50%;left:50%;transform:translate(-50%,-50%)}.price-card__discount-text{position:relative;z-index:2;color:#fff;font-size:12px;font-weight:600;line-height:18px}.price-card__features{display:flex;align-items:center;justify-content:center;column-gap:16px}.price-card__feature{color:#222e3a;font-size:14px;line-height:20px;display:flex;align-items:center;gap:6px}.price-card__feature:before{content:"";display:block;width:4px;height:4px;background-color:#20df9e;border-radius:50%;flex-shrink:0}.features-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.features-list__item{display:flex;flex-direction:column;align-items:center;gap:6px}.features-list__icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center}.features-list__text{color:#293a53;text-align:center;font-size:16px;line-height:24px;letter-spacing:-.1px}</style></template><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen>

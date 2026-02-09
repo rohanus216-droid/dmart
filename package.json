@@ -2,15 +2,7 @@
   "name": "dmat-clone",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "python -m http.server 3000",
-    "build": "echo 'Build complete'",
-    "deploy": "vercel --prod"
-  },
   "dependencies": {
     "pg": "^8.11.3"
-  },
-  "devDependencies": {
-    "@vercel/node": "^3.0.0"
   }
 }
