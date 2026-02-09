@@ -11,7 +11,7 @@
   ],
   "functions": {
     "backends/server.js": {
-      "runtime": "nodejs18.x"
+      "runtime": "nodejs18.1"
     }
   }
 }
