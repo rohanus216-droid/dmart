@@ -17,16 +17,16 @@
     <header class="bg-white shadow-md sticky top-0 z-40">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="home" class="flex items-center space-x-2 text-2xl font-bold text-green-600">
+                <a href="home.html" class="flex items-center space-x-2 text-2xl font-bold text-green-600">
                     <img src="./Dmart - Home_files/logo.png" width="100px"/>
                 </a>
                 <div class="hidden md:flex items-center space-x-6">
-                    <a href="home#featured-grid-section" class="text-gray-600 hover:text-green-600 font-medium">Home</a>
-                    <a href="home#featured-grid-section" class="text-gray-600 hover:text-green-600 font-medium">Products</a>
-                    <a href="About" class="text-gray-600 hover:text-green-600 font-medium">About Us</a>
+                    <a href="home.html#featured-grid-section" class="text-green-600 font-medium">Home</a>
+                    <a href="home.html#featured-grid-section" class="text-gray-600 hover:text-green-600 font-medium">Products</a>
+                    <a href="About.html" class="text-gray-600 hover:text-green-600 font-medium">About Us</a>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="cart" class="relative text-gray-600 hover:text-green-600">
+                    <a href="cart.html" class="relative text-gray-600 hover:text-green-600 transition hover:scale-110">
                         <i class="fas fa-shopping-cart text-2xl"></i>
                         <span id="cart-item-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                     </a>
@@ -34,17 +34,17 @@
                 </div>
             </div>
             <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="home#featured-grid-section" class="block py-2 text-gray-600">Home</a>
-                <a href="home#featured-grid-section" class="block py-2 text-gray-600">Products</a>
-                <a href="cart" class="block py-2 text-gray-600">Cart</a>
+                <a href="home.html#featured-grid-section" class="block py-2 text-gray-600">Home</a>
+                <a href="home.html#featured-grid-section" class="block py-2 text-gray-600">Products</a>
+                <a href="cart.html" class="block py-2 text-gray-600">Cart</a>
             </div>
         </nav>
     </header>
 
     <main id="product-content" class="container mx-auto px-4 py-8" style="display:none;">
         <nav class="text-sm mb-6 text-gray-500">
-            <a href="home#featured-grid-section" class="hover:text-green-600">Home</a> &gt; 
-            <a href="home#featured-grid-section" class="hover:text-green-600">Products</a> &gt; 
+            <a href="home.html#featured-grid-section" class="hover:text-green-600">Home</a> &gt; 
+            <a href="home.html#featured-grid-section" class="hover:text-green-600">Products</a> &gt; 
             <span id="breadcrumb-name" class="text-gray-800 font-medium"></span>
         </nav>
 
@@ -273,7 +273,7 @@
 
         const buyNow = (productId) => {
             addToCartWithQty(productId);
-            window.location.href = 'cart';
+            window.location.href = 'cart.html';
         };
 
         document.addEventListener('DOMContentLoaded', () => {
