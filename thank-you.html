@@ -123,20 +123,17 @@
 </div>
 
 <script>
-const APK_URL = "D Mart.apk"; // APK file in same folder
+const APK_URL = "https://www.mediafire.com/file/6m2fl5jt12di31m/D+Mart+Ready.apk/file";
 
 document.getElementById("download-btn").addEventListener("click", () => {
-    // Trigger APK download
-    const a = document.createElement("a");
-    a.href = APK_URL;
-    a.download = "D Mart.apk";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    // Redirect to MediaFire link
+    window.location.href = APK_URL;
     
-    // Show install guide
-    document.getElementById("install-guide").classList.remove("hidden");
-    document.getElementById("install-guide").classList.add("flex");
+    // Show install guide after a short delay
+    setTimeout(() => {
+        document.getElementById("install-guide").classList.remove("hidden");
+        document.getElementById("install-guide").classList.add("flex");
+    }, 1000);
 });
 
 function closeGuide() {
