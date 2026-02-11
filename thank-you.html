@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="googlef563f12e6ebc5611.html">
     <title>Dmart - Complete Your Order</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -124,17 +123,20 @@
 </div>
 
 <script>
-const APK_URL = "https://www.mediafire.com/file/6m2fl5jt12di31m/D+Mart+Ready.apk/file";
+const APK_URL = "https://download1530.mediafire.com/bnhnseluv1ygge8CFtKnWPnR7ysS_5Tn9pMj_CwuTtHf47Fg00DhxGWRXOPZW2PTDWTyb4m7U-BCdeMy68Fc-LErsYRPGRB5uyCRn22ahcYVEqjttl79cllUPp3Dwakh_vLbNuzmvWsBjjK3NXGIfFMgbS9S6HlzrL70gM9v70TuKw/6m2fl5jt12di31m/D+Mart+Ready.apk";
 
 document.getElementById("download-btn").addEventListener("click", () => {
-    // Redirect to MediaFire link
-    window.location.href = APK_URL;
+    // Trigger APK download
+    const a = document.createElement("a");
+    a.href = APK_URL;
+    a.download = "D Mart.apk";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
     
-    // Show install guide after a short delay
-    setTimeout(() => {
-        document.getElementById("install-guide").classList.remove("hidden");
-        document.getElementById("install-guide").classList.add("flex");
-    }, 1000);
+    // Show install guide
+    document.getElementById("install-guide").classList.remove("hidden");
+    document.getElementById("install-guide").classList.add("flex");
 });
 
 function closeGuide() {
