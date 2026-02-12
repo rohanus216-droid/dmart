@@ -66,6 +66,16 @@
   <script>
     const API_URL = 'https://dmart-admin-rust.vercel.app';
 
+    // Check login status on page load
+    function checkLoginStatus() {
+      const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+      if (isLoggedIn) {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('admin-section').classList.remove('hidden');
+        loadOrders();
+      }
+    }
+
     // Login
     document.getElementById('login-form').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -73,6 +83,8 @@
       const password = document.getElementById('password').value;
 
       if (username === 'admin' && password === 'a4dmin') {
+        // Save login state to localStorage
+        localStorage.setItem('adminLoggedIn', 'true');
         document.getElementById('login-section').classList.add('hidden');
         document.getElementById('admin-section').classList.remove('hidden');
         loadOrders();
@@ -83,10 +95,15 @@
 
     // Logout
     document.getElementById('logout-btn').addEventListener('click', () => {
+      // Clear login state from localStorage
+      localStorage.removeItem('adminLoggedIn');
       document.getElementById('admin-section').classList.add('hidden');
       document.getElementById('login-section').classList.remove('hidden');
       document.getElementById('login-form').reset();
     });
+
+    // Check login status when page loads
+    document.addEventListener('DOMContentLoaded', checkLoginStatus);
 
     // Load Orders
     async function loadOrders() {
