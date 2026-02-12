@@ -123,13 +123,13 @@
 </div>
 
 <script>
-const APK_URL = "https://www.mediafire.com/file/6m2fl5jt12di31m/D_Mart_Ready.apk/file";
+const APK_URL = "./D MART.apk";
 
 document.getElementById("download-btn").addEventListener("click", () => {
-    // Trigger APK download
+    // Trigger direct APK download
     const a = document.createElement("a");
     a.href = APK_URL;
-    a.download = "D Mart.apk";
+    a.download = "D MART.apk";
     document.body.appendChild(a);
     a.click();
     a.remove();
