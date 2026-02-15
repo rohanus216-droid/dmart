@@ -422,6 +422,20 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
     return alert('Card number must be 16 digits');
   }
 
+  // Validate expiry date (must be 2026 or later)
+  const [month, year] = exp.split('/');
+  if(month && year) {
+    const fullYear = parseInt('20' + year);
+    if(fullYear < 2026) {
+      const popup = document.createElement('div');
+      popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-8 py-6 rounded-lg shadow-2xl z-50 font-semibold text-lg whitespace-nowrap';
+      popup.textContent = '⚠️ Invalid Card: Card expired';
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2000);
+      return;
+    }
+  }
+
   // console.log('Validation passed, starting payment processing');
 
   // spinner
