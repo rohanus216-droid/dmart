@@ -14,7 +14,7 @@ Run `schema.sql` in your Supabase SQL Editor
 - Go to Vercel Dashboard → Project Settings → Environment Variables
 - Add:
   - **Name:** `DATABASE_URL`
-  - **Value:** `postgresql://postgres:1234DRACULAW@1!!@db.kiaqlarshmbylzjiwzec.supabase.co:5432/postgres`
+  - **Value:** `postgresql://postgres.oznvrkuwhcfxtgijsdgf:1234DMARTDB@1@aws-1-ap-south-1.pooler.supabase.com:5432/postgres`
   - **Environment:** Production, Preview, Development
 
 ### 4. Deploy
