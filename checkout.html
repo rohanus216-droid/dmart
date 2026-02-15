@@ -193,7 +193,7 @@
     <input type="text" id="card-number" class="w-full border rounded-lg p-3 pr-12" placeholder="0000 0000 0000 0000" maxlength="19">
 
     <!-- Card Logo (right side) -->
-    <img id="card-logo" class="absolute right-3 top-3 w-8 h-8 hidden" alt="Card type">
+    <img id="card-logo" class="absolute right-3 top-3 w-10 h-10" style="display:none;" alt="Card type">
   </div>
 </div>
 
@@ -540,7 +540,7 @@ cardInput.addEventListener("input", () => {
     let type = detectCardType(num);
 
     if (!type) {
-        cardLogo.classList.add("hidden");
+        cardLogo.style.display = "none";
         cvvInput.maxLength = 3;
         cvvInput.placeholder = "123";
         return;
@@ -548,7 +548,7 @@ cardInput.addEventListener("input", () => {
 
     // Show card logo
     cardLogo.src = `https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/${type}.svg`;
-    cardLogo.classList.remove("hidden");
+    cardLogo.style.display = "block";
 
     // CVV rules
     if (type === "amex") {
