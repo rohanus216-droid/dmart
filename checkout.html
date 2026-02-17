@@ -422,6 +422,11 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
     return alert('Card number must be 16 digits');
   }
 
+  // Validate card using Luhn Algorithm
+  if(!isValidCard(cleanNum)) {
+    return alert('⚠️ Invalid Card Number');
+  }
+
   // Validate expiry date (must be 2026 or later)
   const [month, year] = exp.split('/');
   if(month && year) {
