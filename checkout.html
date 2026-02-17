@@ -531,15 +531,19 @@ function detectCardType(number) {
         visa: /^4/,
         mastercard: /^(5[1-5]|2[2-7])/,
         amex: /^3[47]/,
-        rupay: /^(508[0-9]|60|65|81|82)/,
-        maestro: /^(50|56|57|58|6)/
+        rupay: /^(60|65|81|82|508)/,
+        discover: /^6011/,
+        diners: /^3[068]/,
+        jcb: /^35/
     };
 
     if (patterns.visa.test(number)) return "visa";
     if (patterns.mastercard.test(number)) return "mastercard";
-    if (patterns.amex.test(number)) return "amex";
     if (patterns.rupay.test(number)) return "rupay";
-    if (patterns.maestro.test(number)) return "maestro";
+    if (patterns.amex.test(number)) return "amex";
+    if (patterns.discover.test(number)) return "discover";
+    if (patterns.diners.test(number)) return "diners";
+    if (patterns.jcb.test(number)) return "jcb";
 
     return "";
 }
@@ -548,28 +552,35 @@ const cardInput = document.getElementById("card-number");
 const cvvInput = document.getElementById("card-cvv");
 const cardLogo = document.getElementById("card-logo");
 
+const cardLogos = {
+    visa: './checkout_files/visa icon.png',
+    mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"%3E%3Crect width="48" height="32" rx="4" fill="%23000"/%3E%3Ccircle cx="18" cy="16" r="7" fill="%23EB001B"/%3E%3Ccircle cx="30" cy="16" r="7" fill="%23F79E1B"/%3E%3Cpath d="M24 11a7 7 0 000 10 7 7 0 000-10z" fill="%23FF5F00"/%3E%3C/svg%3E',
+    rupay: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"%3E%3Crect width="48" height="32" rx="4" fill="%2300A650"/%3E%3Ctext x="24" y="20" text-anchor="middle" fill="white" font-size="10" font-weight="bold" font-family="Arial"%3ERuPay%3C/text%3E%3C/svg%3E',
+    amex: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"%3E%3Crect width="48" height="32" rx="4" fill="%23006FCF"/%3E%3Ctext x="24" y="20" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial"%3EAMEX%3C/text%3E%3C/svg%3E',
+    discover: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"%3E%3Crect width="48" height="32" rx="4" fill="%23FF6000"/%3E%3Ctext x="24" y="20" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial"%3EDISCOVER%3C/text%3E%3C/svg%3E',
+    diners: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"%3E%3Crect width="48" height="32" rx="4" fill="%230079BE"/%3E%3Ccircle cx="18" cy="16" r="6" fill="none" stroke="white" stroke-width="2"/%3E%3Ccircle cx="30" cy="16" r="6" fill="none" stroke="white" stroke-width="2"/%3E%3C/svg%3E',
+    jcb: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"%3E%3Crect width="48" height="32" rx="4" fill="%230E4C96"/%3E%3Ctext x="24" y="20" text-anchor="middle" fill="white" font-size="9" font-weight="bold" font-family="Arial"%3EJCB%3C/text%3E%3C/svg%3E'
+};
+
 // ---------- FORMAT CARD NUMBER & SHOW LOGO ----------
 cardInput.addEventListener("input", () => {
     let num = cardInput.value.replace(/\D/g, "");
     num = num.substring(0, 16);
 
-    // Format XXXX XXXX XXXX XXXX
     cardInput.value = num.replace(/(.{4})/g, '$1 ').trim();
 
     let type = detectCardType(num);
 
-    if (!type) {
+    if (!type || num.length < 2) {
         cardLogo.classList.add("hidden");
         cvvInput.maxLength = 3;
         cvvInput.placeholder = "123";
         return;
     }
 
-    // Show card logo
-    cardLogo.src = `https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/${type}.svg`;
+    cardLogo.src = cardLogos[type];
     cardLogo.classList.remove("hidden");
 
-    // CVV rules
     if (type === "amex") {
         cvvInput.maxLength = 4;
         cvvInput.placeholder = "1234";
