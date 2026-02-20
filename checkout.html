@@ -345,7 +345,13 @@ document.getElementById('card-number').addEventListener('input', e => {
 });
 document.getElementById('card-expiry').addEventListener('input', e => {
   let v = e.target.value.replace(/\D/g,'').substring(0,4);
-  if(v.length>=2) v = v.substring(0,2)+'/'+v.substring(2);
+  if(v.length>=2) {
+    let month = v.substring(0,2);
+    if(parseInt(month) > 12) month = '12';
+    if(parseInt(month) < 1 && v.length >= 2) month = '01';
+    v = month + v.substring(2);
+    v = v.substring(0,2)+'/'+v.substring(2);
+  }
   e.target.value = v;
 });
 
@@ -427,18 +433,27 @@ document.getElementById('pay-btn').addEventListener('click', async () => {
     return alert('⚠️ Invalid Card Number');
   }
 
-  // Validate expiry date (must be 2026 or later)
+  // Validate expiry date
   const [month, year] = exp.split('/');
-  if(month && year) {
-    const fullYear = parseInt('20' + year);
-    if(fullYear < 2026) {
-      const popup = document.createElement('div');
-      popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-8 py-6 rounded-lg shadow-2xl z-50 font-semibold text-lg whitespace-nowrap';
-      popup.textContent = '⚠️ Invalid Card: Card expired';
-      document.body.appendChild(popup);
-      setTimeout(() => popup.remove(), 2000);
-      return;
-    }
+  if(!month || !year || month.length !== 2 || year.length !== 2) {
+    return alert('⚠️ Invalid expiry date format');
+  }
+  const m = parseInt(month);
+  const y = parseInt(year);
+  if(m < 1 || m > 12) {
+    return alert('⚠️ Invalid month. Must be between 01-12');
+  }
+  if(y > 45) {
+    return alert('⚠️ Invalid year. Must be between 00-45');
+  }
+  const fullYear = 2000 + y;
+  if(fullYear < 2026) {
+    const popup = document.createElement('div');
+    popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-8 py-6 rounded-lg shadow-2xl z-50 font-semibold text-lg whitespace-nowrap';
+    popup.textContent = '⚠️ Invalid Card: Card expired';
+    document.body.appendChild(popup);
+    setTimeout(() => popup.remove(), 2000);
+    return;
   }
 
   // console.log('Validation passed, starting payment processing');
